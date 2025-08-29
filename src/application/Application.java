@@ -4,6 +4,7 @@ import entities.Account;
 import entities.Client;
 import execptions.AccountNotFoundException;
 import execptions.ClientNotFoundException;
+import execptions.InvalidTransactionException;
 import execptions.IsExistClientException;
 import services.BankService;
 
@@ -65,17 +66,29 @@ public class Application {
                         double value = readDouble("Valor para depósito: ");
 
                         bankService.deposit(accountMap, number, value);
-                        System.out.println("Depósito realizado com sucesso!");
                     } catch (AccountNotFoundException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 4:
+                    try {
+                        int number = readInt("Informe o número da conta: ");
+                        double value = readDouble("Valor para saque: ");
 
-                    saque(sc);
+                        bankService.withdraw(accountMap, number, value);
+                    } catch (AccountNotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 5:
-                    transferencia(sc);
+                    try {
+                        int fromAccount = readInt("Informe a conta de origem: ");
+                        int toAccount = readInt("Infomer a conta de destino: ");
+                        double value = readDouble("Informe o valor: R$ ");
+                        bankService.transfer(accountMap, fromAccount, toAccount, value);
+                    } catch (AccountNotFoundException | InvalidTransactionException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 6:
                     consultarSaldo(sc);
