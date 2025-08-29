@@ -2,16 +2,19 @@ package application;
 
 import entities.Account;
 import entities.Client;
+import execptions.ClientNotFoundException;
+import execptions.IsExistClientException;
+import services.BankService;
 
 import java.util.*;
 
 public class Application {
-    private static Set<Client> clientes = new HashSet<>();
-    private static Map<Integer, Account> contas = new HashMap<>();
-    private static int numeroConta = 1001;
+    private static Set<Client> clients = new HashSet<>();
+    private static Map<Integer, Account> accountMap = new HashMap<>();
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        BankService bankService = new BankService();
         boolean rodando = true;
 
         while (rodando) {
@@ -30,8 +33,30 @@ public class Application {
             int opcao = Integer.parseInt(sc.nextLine());
 
             switch (opcao) {
-                case 1: cadastrarCliente(sc); break;
-                case 2: cadastrarConta(sc); break;
+                case 1:
+                    System.out.print("Nome: ");
+                    String name = sc.nextLine();
+                    while (true){
+                        try{
+                            System.out.print("CPF: ");
+                            String cpf = sc.nextLine();
+                            bankService.addClient(clients, name, cpf);
+                            break;
+                        }catch (IllegalArgumentException | IsExistClientException e){
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    break;
+                case 2:
+                    try {
+                        System.out.print("Informe CPF: ");
+                        String cpf = sc.nextLine();
+
+                        bankService.createAccount(clients, accountMap, cpf);
+                    } catch (IllegalArgumentException | ClientNotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
                 case 3: deposito(sc); break;
                 case 4: saque(sc); break;
                 case 5: transferencia(sc); break;
