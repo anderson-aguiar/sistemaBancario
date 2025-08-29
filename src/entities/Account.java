@@ -42,9 +42,8 @@ public class Account {
         if (value > 0) {
             this.balance += value;
             this.statements.add(new Transaction(TransactionType.DEPOSIT, value, 0, this.number));
-            System.out.println("Deposito feito com sucesso!");
         } else {
-            throw new InvalidTransactionException("Valor precisa ser positivo");
+            throw new InvalidTransactionException("Valor precisa ser positivo.");
         }
     }
 
@@ -52,9 +51,8 @@ public class Account {
         if (value <= this.balance && value > 0) {
             this.balance -= value;
             this.statements.add(new Transaction(TransactionType.WITHDRAW, value, this.number, 0));
-            System.out.println("Saque feito com sucesso!");
         } else if (value <= 0) {
-            throw new InvalidTransactionException("Informar um valor positivo");
+            throw new InvalidTransactionException("Informar um valor positivo.");
         } else {
             throw new InvalidTransactionException("Saldo insuficiente!");
         }
@@ -62,7 +60,7 @@ public class Account {
 
     public void transfer(double value, Account toAccount) {
         if (value <= 0) {
-            throw new InvalidTransactionException("Informar um valor positivo");
+            throw new InvalidTransactionException("Informar um valor positivo.");
         }
         if (value > this.balance) {
             throw new InvalidTransactionException("Saldo insuficiente!");
@@ -75,7 +73,6 @@ public class Account {
 
         toAccount.statements.add(new Transaction(TransactionType.TRANSFER, value, this.number, toAccount.getNumber()));
 
-        System.out.println("Transferência feita com sucesso!");
     }
 
     public void printStatement() {

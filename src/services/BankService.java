@@ -36,14 +36,14 @@ public class BankService {
         Account account = accounts.get(accountNumber);
         if (account == null) throw new AccountNotFoundException("Conta não tem cadastro.");
         account.deposit(value);
-        System.out.println("Deposito realizado com sucesso");
+        System.out.println("Deposito realizado com sucesso.");
     }
 
     public void withdraw(Map<Integer, Account> accounts, int accountNumber, double value) {
         Account account = accounts.get(accountNumber);
         if (account == null) throw new AccountNotFoundException("Conta não tem cadastro.");
         account.withdraw(value);
-        System.out.println("Saque realizado com sucesso");
+        System.out.println("Saque realizado com sucesso.");
     }
 
     public void transfer(Map<Integer, Account> accounts, int fromAccountNumber, int toAccountNumber, double value) {
@@ -56,26 +56,29 @@ public class BankService {
             throw new AccountNotFoundException("Conta numero " + toAccountNumber + " não cadastrada!");
         }
         fromAccout.transfer(value, toAccount);
-        System.out.println("Transferência realizada com sucesso");
+        System.out.println("Transferência realizada com sucesso.");
     }
-    public double getBalance(Map<Integer, Account> accounts, int accountNumber){
+
+    public double getBalance(Map<Integer, Account> accounts, int accountNumber) {
         Account account = accounts.get(accountNumber);
-        if(account != null){
+        if (account != null) {
             return account.getBalance();
-        }else {
+        } else {
             throw new AccountNotFoundException("Conta numero " + accountNumber + " não cadastrada!");
         }
     }
-    public void showStatements(Map<Integer, Account> accounts, int accountNumber){
+
+    public void showStatements(Map<Integer, Account> accounts, int accountNumber) {
         Account account = accounts.get(accountNumber);
-        if(account != null){
+        if (account != null) {
             account.printStatement();
-        }else {
+        } else {
             throw new AccountNotFoundException("Conta numero " + accountNumber + " não cadastrada!");
         }
     }
-    public void showClients(Set<Client> clients){
-        if(clients.isEmpty()){
+
+    public void showClients(Set<Client> clients) {
+        if (clients.isEmpty()) {
             throw new ClientNotFoundException("Não existe clientes cadastrados");
         }
         clients.forEach(System.out::println);
