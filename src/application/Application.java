@@ -91,13 +91,28 @@ public class Application {
                     }
                     break;
                 case 6:
-                    consultarSaldo(sc);
+                    try {
+                        int accountNumber = readInt("Informe a conta: ");
+                        double value = bankService.getBalance(accountMap, accountNumber);
+                        System.out.println("Conta " + accountNumber + " | Saldo de R$ " + String.format("%.2f", value));
+                    } catch (AccountNotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 7:
-                    extrato(sc);
+                    try {
+                        int accountNumber = readInt("Informe a conta: ");
+                        bankService.showStatements(accountMap, accountNumber);
+                    } catch (AccountNotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 8:
-                    listarClientes();
+                    try {
+                        bankService.showClients(clients);
+                    } catch (ClientNotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 9:
                     rodando = false;

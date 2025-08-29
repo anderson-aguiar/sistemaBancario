@@ -59,11 +59,26 @@ public class Account {
             throw new InvalidTransactionException("Saldo insuficiente!");
         }
     }
-    public void transfer(double value, Account toAccount){
-        this.withdraw(value);
-        toAccount.deposit(value);
+
+    public void transfer(double value, Account toAccount) {
+        if (value <= 0) {
+            throw new InvalidTransactionException("Informar um valor positivo");
+        }
+        if (value > this.balance) {
+            throw new InvalidTransactionException("Saldo insuficiente!");
+        }
+
+        this.balance -= value;
+        toAccount.balance += value;
+
+        this.statements.add(new Transaction(TransactionType.TRANSFER, value, this.number, toAccount.getNumber()));
+
+        toAccount.statements.add(new Transaction(TransactionType.TRANSFER, value, this.number, toAccount.getNumber()));
+
+        System.out.println("Transferência feita com sucesso!");
     }
-    public void printStatement(){
+
+    public void printStatement() {
         statements.forEach(System.out::println);
     }
 
