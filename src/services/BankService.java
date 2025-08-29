@@ -2,6 +2,7 @@ package services;
 
 import entities.Account;
 import entities.Client;
+import execptions.AccountNotFoundException;
 import execptions.ClientNotFoundException;
 import execptions.IsExistClientException;
 
@@ -27,6 +28,14 @@ public class BankService {
                 .orElseThrow(() -> new ClientNotFoundException("Cliente não tem cadastro"));
         Account account = new Account(numberAccount, client, 0.0);
         accountMap.put(numberAccount, account);
+        System.out.println("Conta " + numberAccount + " criada com sucesso!!!");
+    }
+
+    public void deposit(Map<Integer, Account> accounts, int numberAccount, double value) {
+        Account account = accounts.get(numberAccount);
+        if (account == null) throw new AccountNotFoundException("Conta não tem cadastro");
+        account.deposit(value);
+        System.out.println("Deposito realizado com sucesso");
     }
 
     private void checkCPF(String cpf) {

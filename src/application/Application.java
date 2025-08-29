@@ -2,6 +2,7 @@ package application;
 
 import entities.Account;
 import entities.Client;
+import execptions.AccountNotFoundException;
 import execptions.ClientNotFoundException;
 import execptions.IsExistClientException;
 import services.BankService;
@@ -11,9 +12,10 @@ import java.util.*;
 public class Application {
     private static Set<Client> clients = new HashSet<>();
     private static Map<Integer, Account> accountMap = new HashMap<>();
+    private static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+
         BankService bankService = new BankService();
         boolean rodando = true;
 
@@ -36,13 +38,13 @@ public class Application {
                 case 1:
                     System.out.print("Nome: ");
                     String name = sc.nextLine();
-                    while (true){
-                        try{
+                    while (true) {
+                        try {
                             System.out.print("CPF: ");
                             String cpf = sc.nextLine();
                             bankService.addClient(clients, name, cpf);
                             break;
-                        }catch (IllegalArgumentException | IsExistClientException e){
+                        } catch (IllegalArgumentException | IsExistClientException e) {
                             System.out.println(e.getMessage());
                         }
                     }
@@ -57,17 +59,63 @@ public class Application {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 3: deposito(sc); break;
-                case 4: saque(sc); break;
-                case 5: transferencia(sc); break;
-                case 6: consultarSaldo(sc); break;
-                case 7: extrato(sc); break;
-                case 8: listarClientes(); break;
-                case 9: rodando = false; break;
-                default: System.out.println("Opção inválida!");
+                case 3:
+                    try {
+                        int number = readInt("Informe o número da conta: ");
+                        double value = readDouble("Valor para depósito: ");
+
+                        bankService.deposit(accountMap, number, value);
+                        System.out.println("Depósito realizado com sucesso!");
+                    } catch (AccountNotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 4:
+
+                    saque(sc);
+                    break;
+                case 5:
+                    transferencia(sc);
+                    break;
+                case 6:
+                    consultarSaldo(sc);
+                    break;
+                case 7:
+                    extrato(sc);
+                    break;
+                case 8:
+                    listarClientes();
+                    break;
+                case 9:
+                    rodando = false;
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
             }
         }
-        sc.close();
+
     }
 
+    private static int readInt(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Digite um valor válido. Tente novamente.");
+            }
+        }
+    }
+
+    private static double readDouble(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return Double.parseDouble(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Digite um valor válido. Tente novamente.");
+            }
+        }
+
+    }
 }
