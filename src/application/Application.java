@@ -2,10 +2,10 @@ package application;
 
 import entities.Account;
 import entities.Client;
-import execptions.AccountNotFoundException;
-import execptions.ClientNotFoundException;
-import execptions.InvalidTransactionException;
-import execptions.IsExistClientException;
+import exceptions.AccountNotFoundException;
+import exceptions.ClientNotFoundException;
+import exceptions.InvalidTransactionException;
+import exceptions.IsExistClientException;
 import services.BankService;
 
 import java.util.*;
@@ -124,10 +124,10 @@ public class Application {
 
     }
 
-    private static int readInt(String prompt) {
+    private static int readInt(String message) {
         while (true) {
             try {
-                System.out.print(prompt);
+                System.out.print(message);
                 return Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException e) {
                 System.out.println("Digite um valor válido. Tente novamente.");
@@ -135,10 +135,10 @@ public class Application {
         }
     }
 
-    private static double readDouble(String prompt) {
+    private static double readDouble(String message) {
         while (true) {
             try {
-                System.out.print(prompt);
+                System.out.print(message);
                 return Double.parseDouble(sc.nextLine());
             } catch (NumberFormatException e) {
                 System.out.println("Digite um valor válido. Tente novamente.");

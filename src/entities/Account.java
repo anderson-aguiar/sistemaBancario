@@ -1,6 +1,6 @@
 package entities;
 
-import execptions.InvalidTransactionException;
+import exceptions.InvalidTransactionException;
 
 import java.util.ArrayList;
 import java.util.List;

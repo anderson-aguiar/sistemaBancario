@@ -1,4 +1,4 @@
-package execptions;
+package exceptions;
 
 public class IsExistClientException extends RuntimeException {
     public IsExistClientException(String message) {

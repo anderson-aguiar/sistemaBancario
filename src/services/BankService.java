@@ -2,9 +2,9 @@ package services;
 
 import entities.Account;
 import entities.Client;
-import execptions.AccountNotFoundException;
-import execptions.ClientNotFoundException;
-import execptions.IsExistClientException;
+import exceptions.AccountNotFoundException;
+import exceptions.ClientNotFoundException;
+import exceptions.IsExistClientException;
 
 import java.util.Map;
 import java.util.Set;

@@ -24,7 +24,7 @@ O objetivo principal foi exercitar conceitos fundamentais de **Java**, incluindo
 
 4. **Execute o projeto**  
    ```bash
-   java -cp bin App
+   java -cp bin Application
    ```
 
 ---
